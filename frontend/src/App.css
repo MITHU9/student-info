@@ -1,0 +1,56 @@
+@media print {
+  @page {
+    size: A4;
+    margin: 0; /* Remove all margins */
+  }
+
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .print-area {
+    width: 100%;
+    height: 100%;
+  }
+
+  .student-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    margin: 0;
+    width: 90px;
+    page-break-inside: avoid;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .student-info {
+    text-align: center;
+    font-size: 10px;
+  }
+  .namee {
+    font-size: 12px;
+  }
+  .mar {
+    margin-top: 5px;
+  }
+  .stu {
+    font-size: 8px;
+  }
+
+  button,
+  select,
+  .deptName {
+    display: none;
+  }
+}
