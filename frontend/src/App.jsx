@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import useStudentInfo from "./hooks/useStudentInfo";
+import { useEffect, useRef, useState } from "react";
+import "./App.css";
 import Loading from "./components/loader/Loading";
+import useStudentInfo from "./hooks/useStudentInfo";
 
 const departments = [
   { id: 1, name: "CSE" },
@@ -29,6 +30,7 @@ const departments = [
 function App() {
   const [code, setCode] = useState(1);
   const [data, refetch, loading] = useStudentInfo(code);
+  const printRef = useRef();
 
   useEffect(() => {
     refetch();
@@ -42,20 +44,24 @@ function App() {
     );
   }
 
-  //console.log(data);
+  const handlePrint = () => {
+    window.print();
+  };
 
   return (
-    <div className="px-12">
-      <div className="text-center mt-10">
+    <div ref={printRef} className="px-12">
+      <div className="text-center mt-10 mar">
         <div className="flex justify-between">
-          <h2 className="font-bold text-xl">
+          <h2 className="font-bold text-xl namee">
             {data?.department || "Computer Science & Engineering"}
           </h2>
-          <h1 className="font-bold text-2xl">Session: 2023-2024</h1>
+          <h1 className="font-bold text-2xl namee">Session: 2023-2024</h1>
         </div>
         <hr className="mt-2" />
         <div className="flex items-center gap-3 justify-end">
-          <h2 className="text-xl font-semibold mt-3">Department Name:</h2>
+          <h2 className="text-xl font-semibold mt-3 deptName">
+            Department Name:
+          </h2>
           <select
             name="code"
             id="code"
@@ -72,32 +78,34 @@ function App() {
               </option>
             ))}
           </select>
+          <button
+            onClick={handlePrint}
+            className="bg-blue-500 text-white p-2 mt-1 rounded"
+          >
+            Print
+          </button>
         </div>
-        <div>
-          {/* Student info with name roll and image */}
-          <div className="grid md:grid-cols-4 lg:grid-cols-6 gap-4 mt-10">
+
+        <div ref={printRef} className="print-container">
+          <div className="grid grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-2 ">
             {data?.students?.map((student) => (
-              <div key={student._id} className="flex flex-col items-center">
+              <div key={student._id} className="text-center p-1">
                 <img
                   src={student?.picture || "/avatar.jpg"}
                   alt={student.name}
-                  className="w-32 h-32 rounded-full"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full mx-auto"
                 />
-                <div className="mt-2">
-                  <div className="">
-                    <h3 className="text-sm text-left font-semibold">
-                      {student?.Name}
-                    </h3>
-                    <p className="font-bold text-md text-left">
-                      Roll: {student.Roll}
-                    </p>
-                  </div>
+                <div className="mt-1 text-[10px] ">
+                  <h3 className="font-semibold stu">{student?.Name}</h3>
+                  <p className="stu">Roll: {student.Roll}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Print Styles */}
     </div>
   );
 }
